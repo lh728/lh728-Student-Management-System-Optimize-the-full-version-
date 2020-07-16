@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>修改信息</title>
+    <script src="./jquery-1.12.4.min.js"></script>
+
+    <script>
+        $(function () {
+            var update_btn = $("#update_btn");
+            update_btn.click(function () {
+                var name = $("#name");
+                var sex = $("#sex");
+                var age = $("#age");
+                var id = $("#id");
+                $.ajax({
+                    url: "/update",
+                    data: {id: id.val(), name: name.val(), sex: sex.val(), age: age.val()},
+                    success: function (result) {
+                        console.log(result)
+                        if (result.id == id.val()) {
+                            alert("修改成功");
+                            location.href = "getLogin";
+                        } else {
+                            alert("修改失败");
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+</head>
+
+<h1>这是修改页面</h1>
+<form>
+    姓名：<input type="text" id="name" name="name" placeholder="name" maxlength="20" required="required" th:value="${model.studentEntity.name}"><br/>
+    年龄：<input type="text" id="age" name="age" placeholder="age" maxlength="20" required="required" th:value="${model.studentEntity.age}"/><br/>
+    性别：<input type="text" id="sex" name="sex" placeholder="sex" maxlength="20" required="required" th:value="${model.studentEntity.sex}"><br/>
+    <input type="hidden" id="id" name="id" placeholder="id" maxlength="20" th:value="${model.studentEntity.id}">
+    <input id="update_btn" type="button" value="修改">
+</form>
+</body>
+</html>
