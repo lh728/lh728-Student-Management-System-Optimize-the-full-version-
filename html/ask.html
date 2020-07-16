@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <!--只是为了使用function,load方法随便找的-->
+    <script type="text/javascript">
+        function toPageAsk(curl){
+            //curl = curl+"?id="+$("#id").text()+"&name="+$("#name").text()+"&sex="+$("#sex").text()+"&age="+$("#age").text();
+            curl = curl+"/"+$("#id").text();
+            $("#contentdiv").load(curl,null,function(){/*alert("加载成功")*/});
+        }
+    </script>
+    <script>
+        function deleteById(id){
+            var url = "delete/" + id;
+            alert("删除成功");
+            location.href = url;
+        }
+    </script>
+</head>
+<body>
+<div>
+    <div align="center">
+        <h1>学生管理系统</h1>
+    </div>
+
+    <table align="center" border="1px" cellpadding="10%" >
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>sex</th>
+            <th>age</th>
+        </tr>
+        </thead>
+        <tr th:each="show:${showInfo}">
+            <td th:text="${show.id}" id="id"></td>
+            <td th:text="${show.name}" id="name"></td>
+            <td th:text="${show.sex}" id="sex"></td>
+            <td th:text="${show.age}" id="age"></td>
+            <td><a href ="#" onclick="toPageAsk('/update')">修改</a></td>
+            <!--<a th:href="'update/'+${show.id}">-->
+            <td><a href='#' th:onclick="|deleteById('${show.id}')|">删除</a> </td>
+            <!--<td><a href='#' th:onclick="|deleteById('${show.id}')|" >删除</a> </td>-->
+        </tr>
+    </table>
+</div>
+</body>
+</html>
