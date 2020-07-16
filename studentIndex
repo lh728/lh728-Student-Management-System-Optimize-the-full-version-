@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>学生管理系统</title>
+    <link rel="stylesheet" href="fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome.min.css">
+    <script src="./jquery-1.12.4.min.js"></script>
+    <!--只是为了使用function,load方法随便找的-->
+    <script type="text/javascript">
+        function toPage(curl){
+            $("#contentdiv").load(curl,null,function(){/*alert("加载成功")*/});
+        }
+    </script>
+    <style>
+        /*设置body样式*/
+        body {
+            margin: 0; /*去掉蓝色边框两侧的空白因为body默认属性两边有缝隙*/
+        }
+
+        /*设置头部样式*/
+        .pg_header {
+            background-color: rgb(189, 181, 181);
+            height: 48px;
+            line-height: 48px;
+            min-width: 980px;
+
+        }
+
+       /*设置logo样式*/
+        .pg_header .logo {
+            background-color: #3b5998;
+            width: 200px;
+            height: 48px;
+            color: white;
+            font-size: 20px;
+            text-align: center; /*设置在这个div中左右居中*/
+        }
+        /*设置用户标签样式*/
+        .pg_header .user {
+            margin-right: 80px;
+            padding: 0 20px;
+            height: 48px;
+            position: relative;
+        }
+        /*设置当鼠标放到这个标签上时变色，并且把*/
+        .pg_header .user:hover {
+            background-color: steelblue;
+        }
+        /*设置头像下面的下拉框，鼠标放上去弹出下拉框，其实就是当鼠标放上去的时候让b去掉以前设置的的display=none*/
+        .pg_header .user:hover .b {
+            display: block;
+        }
+        /*设置头像样式*/
+        .pg_header .user .a img {
+            width: 40px; /*设置头像宽度*/
+            height: 40px; /*设置头像高度*/
+            margin-top: 5px; /*设置图片距离上顶的距离是多少像素*/
+            border-radius: 50%; /*border-radius: 50%让方形的图片变成圆的*/
+        }
+        /*设置下拉框样式*/
+        .pg_header .user .b {
+            position: absolute; /*和user中的relative同用*/
+            top: 48px;
+            right: 0;
+            background-color: #bbbbbb;
+            z-index: 20;
+            width: 160px;
+            margin-right: -39px;
+            margin-top: 0;
+            display: none;
+        }
+        .pg_header .user .b a {
+            display: block;
+        }
+        /*设置左侧边框样式*/
+        .pg_content .menu {
+            position: absolute; /*使用position后top等属性就可以使用了，就可以使用这些属性将一个DIV固定到某个位置*/
+            top: 48px;
+            left: 0;
+            bottom: 0;
+            width: 200px;
+            background-color: rgb(189, 181, 181);
+            min-width: 200px; /* 设置最小宽度也就是当网页窗口缩小到一定程度的时候，*/
+            /*这个div就会永远执行它的宽度是200px,注意：并不是所有浏览器都适用于本方法*/
+        }
+        /*设置右侧边框样式*/
+        .pg_content .content {
+            position: absolute; /*使用position后top等属性就可以使用了，就可以使用这些属性将一个DIV固定到某个位置*/
+            top: 48px;
+            left: 200px;
+            bottom: 0;
+            right: 0;
+
+            overflow: auto; /*用了overflow之后当这个div中纵向内容过多时会出现下拉框*/
+            min-width: 980px; /* 设置最小宽度*/
+            z-index: 9;
+        }
+        /*设置往左飘浮样式*/
+        .left {
+            float: left;
+        }
+        /*设置往右飘浮样式*/
+        .right {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+<!--头部-->
+<div class="pg_header">
+    <div class="logo left">学生管理系统</div>  <!--这个设置往左飘浮-->
+    <i class="fab fa-500px"></i>
+    <div class="user right">            <!--这个设置往右飘浮-->
+        <a class='a' href="#">
+            <img src="./logo.jpg">
+        </a>
+        <div class="b" style="">
+            <a href="#" onClick="return confirm('你是一个管理员!');" target="_self">我的资料</a>
+            <a href="loginIndex" onclick="return confirm('退出成功');">退出</a>
+        </div>
+    </div>
+</div>
+<!--中间-->
+<div class="pg_content">
+    <!--左侧边框（菜单栏）-->
+    <div class="menu left">
+        <ul>
+            <li><a href ="javascript:location.reload();">主页</a></li>
+            <li><a href ="#" onclick="toPage('toAskId')">查询</a></li>
+            <li><a href ="#" onclick="toPage('toAdd')">增加</a></li>
+        </ul>
+    </div>
+
+    <!--左侧边框（内容栏）-->
+    <div class="content left" id="contentdiv">
+        <div align="center">
+            <h1>学生管理系统</h1>
+        </div>
+        <table align="center" border="1px" cellpadding="10%" >
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>sex</th>
+                <th>age</th>
+            </tr>
+            </thead>
+                <tr th:each="show:${saveStudent}">
+                <td th:text="${show.id}"></td>
+                <td th:text="${show.name}"></td>
+                <td th:text="${show.sex}"></td>
+                <td th:text="${show.age}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!--底部-->
+<div class="pg_footer"></div>
+</body>
+
+</html>
