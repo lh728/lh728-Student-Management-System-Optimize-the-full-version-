@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <!--只是为了使用function,load方法随便找的-->
+    <script type="text/javascript">
+        function toPage1(curl){
+            curl = curl+"?id="+$("#id").val();
+            //"/page?id=1&name='tom'&age=2"
+            $("#contentdiv").load(curl,null,function(){/*alert("加载成功")*/});
+        }
+    </script>
+</head>
+<body>
+<div align="center">
+    <h1>学生管理系统</h1>
+</div>
+<div>
+        请输入查询ID：<input type="text" name="id" id="id" placeholder="id" maxlength="20" required="required">
+        <input type="submit" value="提交" onclick="toPage1('/ask')">
+
+</div>
+</body>
+</html>
